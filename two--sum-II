@@ -7,7 +7,7 @@
 一个从头开始一个从尾部开始，大于target 则移动尾指针，小于target 则移动头指针，直到两指针之和等于target 。
 
 测试用例：
-1 2 4 7 11 15    9  15  
+数组：1 2 4 7 11 15   target:  9  15  
 
 
 
@@ -23,8 +23,7 @@ class Solution {
                 end--;
             } else if(numbers[start] + numbers[end] < target){
                 start++;
-            }
-            else{
+            }else{
                  result[0] = ++start;
                  result[1] = ++end; 
                  break;

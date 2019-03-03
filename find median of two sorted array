@@ -1,0 +1,46 @@
+原题地址： https://leetcode.com/problems/median-of-two-sorted-arrays/
+
+分类： 数组
+
+题目描述： 求两个独立数组的合并以后的中位数。
+
+题目要求： 时间复杂度为O(m + n) ,m 和 n 分别为两个数组的长度。
+
+解题思路： 
+
+1  时间复杂度为o(m + n) 那可以想到从空间换时间的方案。
+将两个数组有序合并，然后直接求中位数，如果合并以后是奇数数组，直接中间哪一位，否则中间两位之和除以2.
+
+
+
+class Solution {
+    public double findMedianSortedArrays(int[] nums1, int[] nums2) {
+        int[] combineArray = new int[nums1.length + nums2.length];
+        int point1 = 0;
+        int point2 = 0;
+        int index = 0;
+        //合并数组
+        while(index < combineArray.length){
+           if(point1 < nums1.length && point2 < nums2.length && nums1[point1] < nums2[point2]){
+                combineArray[index++] = nums1[point1++];
+           }else if(point1 < nums1.length && point2 < nums2.length && nums1[point1] > nums2[point2]){
+                combineArray[index++] = nums2[point2++];
+           }else if(point1 < nums1.length) {
+                combineArray[index++] = nums1[point1++];
+           }//数组1 已经全部使用完，则将数组2 剩余的所有放入数组
+           else if(point1 == nums1.length && point2 < nums2.length){
+                combineArray[index++] = nums2[point2++]; 
+           }else if(point2 == nums2.length && point1 < nums1.length){
+                combineArray[index++] = nums2[point1++]; 
+           }
+        }
+        //计算中位数
+        int middle = combineArray.length/2;
+        //偶数长度
+        if (combineArray.length % 2 == 0){
+            return (combineArray[middle] + combineArray[middle - 1])/2d;
+        }else{
+            return combineArray[middle]/1d;
+        }
+    }
+}

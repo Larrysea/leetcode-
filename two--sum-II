@@ -1,0 +1,35 @@
+时间：
+2019/3/3
+题目地址： https://leetcode.com/problems/two-sum-ii-input-array-is-sorted/submissions/
+题目分类： 数组
+
+解题思路： 双指针，因为是递增的，所以两个指针，
+一个从头开始一个从尾部开始，大于target 则移动尾指针，小于target 则移动头指针，直到两指针之和等于target 。
+
+测试用例：
+1 2 4 7 11 15    9  15  
+
+
+
+具体实现：
+
+class Solution {
+    public int[] twoSum(int[] numbers, int target) {
+        int start = 0;
+        int end = numbers.length - 1;
+        int result[] = new int[2];
+        while (start < end){
+            if(numbers[start] + numbers[end] > target){
+                end--;
+            } else if(numbers[start] + numbers[end] < target){
+                start++;
+            }
+            else{
+                 result[0] = ++start;
+                 result[1] = ++end; 
+                 break;
+            }
+        }
+        return result;
+    }
+}

@@ -1,0 +1,87 @@
+原题地址： https://leetcode.com/problems/3sum/
+分类： 数组
+题目名称：3 sum
+
+题目描述： 给出一个数组，找出三个数之和为0 的集合。
+题目要求： 不包含重复集合。不要求重复那就给集合排序。
+解题思路： 
+思路一：方法1 通过枚举寻找，例如数组中第一个数为1 则在剩余数组中找出和为-1 的数。思路就是将3sum 转为two sum。
+
+思路二： 双指针发来计算sum 和如果排序，然后比较范围，如果大于target 值则往右移，来增加最小值，如果大于则缩减最大值。因为结果需要去重，所以获取到结果时判断一下下标，如果和上个数相同则移动下标。
+解法1 ：
+
+class Solution {
+public List<List<Integer>> threeSum(int[] nums) {
+         List<List<Integer>> result = new ArrayList<List<Integer>>();
+        Arrays.sort(nums);
+        int lastNumber = 0;
+        for (int i = 0; i < nums.length; i++) {
+            if (lastNumber == nums[i] && i > 0) {
+                continue;
+            }
+            lastNumber = nums[i];
+            findTwoSum(result, nums, -nums[i], i + 1);
+        }
+        return result;
+    }
+
+
+     public void findTwoSum(List<List<Integer>> result,int[] nums,int target,int startIndex){
+        int left = startIndex;
+        int right = nums.length - 1;
+        while (left < right){
+             int sum = nums[left] + nums[right];
+             if(sum == target){
+                List<Integer> sonResult = new ArrayList();
+                sonResult.add(-target);
+                sonResult.add(nums[left]);
+                sonResult.add(nums[right]);
+                result.add(sonResult);
+                left++;
+                right--;
+                while (left < nums.length && nums[left - 1] == nums[left]) {
+                    left++;
+                } 
+                while (right > 0 && nums[right] == nums[right + 1]) {       
+                    right--;
+                }
+             } else if(sum < target) {
+                 left++;
+             } else {
+                 right--;   
+             }
+        }
+
+
+    }
+
+
+
+ 
+    public void  findTwoSum(List<List<Integer>> result,int[] nums,int target,int startIndex)
+    {int lastNumber = 0;
+        int lastNumberJ = 0;
+        for (int i = startIndex; i < nums.length; i++) {
+            if (lastNumber == nums[i] && i > startIndex) {
+                continue;
+            }
+            lastNumber = nums[i];
+            for (int j = i + 1; j < nums.length; j++) {
+                if (nums[j] == lastNumberJ && j > i + 1) {
+                    continue;
+                }
+                lastNumberJ = nums[j];
+                if (nums[i] + nums[j] == target) {
+                    List<Integer> sonResult = new ArrayList();
+                    sonResult.add(-target);
+                    sonResult.add(nums[i]);
+                    sonResult.add(nums[j]);
+                    result.add(sonResult);
+                }
+            }
+        }
+    }
+ 
+  
+}
+

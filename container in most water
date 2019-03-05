@@ -1,0 +1,47 @@
+原题地址： https://leetcode.com/problems/container-with-most-water/
+分类： 数组
+
+题目描述： 计算容器中最多能装水的容量
+
+题目要求： 
+解题思路： 
+思路一：暴力破解，通过枚举出所有可能的面积，然后计算出最大值。
+思路二：两个原则，宽度越宽越好，高度越高越好，所以定义两个边分别从数组的头和尾开始，如果其中一条边较小，则将该较小的边向另一边靠近，直到两条边相交，则可以计算出最大面积。
+
+
+解法1 ：
+class Solution {
+    public int maxArea(int[] height) {
+         int maxArea = 0;
+         for (int i:height){
+             for(int j = i + 1;j < height.length;j++){
+                maxArea = Math.max(Math.min(height[i],height[j]) * (j - i),maxArea);
+             }
+         }
+         return maxArea;
+    }
+}
+
+解法二：
+class Solution {
+	public int maxArea(int[] height) {
+        int maxArea = 0;
+        int right = height.length - 1;
+        int left = 0; 
+        int area = 0;
+        while (left < right){  
+            area = (height[left] < height[right] ? height[left] : height[right]) * (right - left);
+            maxArea = area > maxArea? area : maxArea;
+            if (height[left] < height[right]){
+                left++;
+            }else if (height[left] > height[right]){
+                right--;
+            }else {
+                left++;
+            }
+        }
+        return maxArea;
+    }
+
+
+}

@@ -1,0 +1,56 @@
+原题地址： https://leetcode.com/problems/3sum-closest/
+分类： 数组
+题目名称：3 sum closet 
+
+题目描述： 给出一个数组，找出三个数之和为最接近target 的集合。
+题目要求： 不包含重复集合。不要求重复那就给集合排序。
+解题思路： 
+
+思路一： 双指针发来计算sum 和如果排序，然后比较范围，如果大于target 值则往右移，来增加最小值，如果大于则缩减最大值。因为结果需要去重，所以获取到结果时判断一下下标，如果和上个数相同则移动下标。
+
+解法1 ：
+
+public int threeSumClosest(int[] nums, int target) {
+        Arrays.sort(nums);
+        int lastNumber = 0;
+        int diff = Integer.MAX_VALUE;
+
+        for (int i = 0; i < nums.length; i++) {
+            //去重
+            if (lastNumber == nums[i] && i > 0) {
+                continue;
+            }
+            lastNumber = nums[i];
+            //找出最小差值得two sum 
+            int distance = findTwoSum(nums, target - nums[i], i + 1);
+            if (Math.abs(diff) > Math.abs(distance)) {
+                diff = distance;
+            }
+        }
+        return target - diff;
+    }
+    
+    
+    
+   public static int findTwoSum(int[] nums, int target, int startIndex) {
+        int left = startIndex;
+        int right = nums.length - 1;
+        int sum = 0;
+        int diff = Integer.MAX_VALUE;
+        while (left < right) {
+            sum = nums[left] + nums[right];
+            //相等差值最小直接返回
+            if (sum == target) {
+                return 0;
+            }
+            //比较差值，切记比较是用绝对值，但是diff 不能用绝对值，因为最后需要通过diff 算出最接近的sum
+            diff = Math.abs(target - sum) < Math.abs(diff) ? target - sum : diff;
+            if (sum < target) {
+                left++;
+            } else {
+                right--;
+            }
+        }
+        return diff;
+    }
+

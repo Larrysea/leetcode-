@@ -1,0 +1,68 @@
+原题地址： https://leetcode.com/problems/next-permutation/
+
+分类 ：  数组 
+
+题目描述： 旋转数组寻找target
+
+题目要求： 时间复杂度为O(lg n)
+
+解题思路： 找到拐点，然后将这种数组转为两个数组的二分查找，然后在进行二分搜索。
+
+1 
+class Solution {
+
+     public static int search(int[] nums, int target) {
+        int pivot = 0;
+        
+        if (nums.length == 0){
+           return -1;
+        }
+        
+        for (int i = 0; i < nums.length; i++) {
+            //找到拐点
+            if (i >= 1 && nums[i] < nums[i - 1]) {
+                pivot = i;
+            }
+        }
+          
+        if (target == nums[pivot]) {
+            return pivot;
+        }
+        //简化为二分搜索
+        if (target <= nums[nums.length - 1] && target > nums[pivot]) {
+            return binarySearch(nums, pivot + 1,nums.length - 1,target);
+        } else {
+            return binarySearch(nums, 0,pivot - 1, target);
+        }
+    }
+
+
+    private static int binarySearch(int[] nums, int startIndex, int endIndex, int target) {
+        int left = startIndex;
+        int right = endIndex;
+        int midden;
+        while (left < right) {
+            midden = (left + right) / 2;
+            if (target == nums[midden]) {
+                return midden;
+            }
+            if (target < nums[midden]) {
+                right = midden - 1;
+            } else {
+                left = midden + 1;
+            }
+        }
+
+        if (left < nums.length && nums[left] == target) {
+            return left;
+        } else if (right >= 0 && nums[right] == target) {
+            return right;
+        } else {
+            return -1;
+        }
+
+    }
+
+
+
+}

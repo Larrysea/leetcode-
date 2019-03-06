@@ -1,0 +1,68 @@
+原题地址： https://leetcode.com/problems/4sum/
+分类： 数组
+题目名称：4 sum 
+
+题目描述： 给出一个数组，找出四个数之和为target的集合。
+题目要求： 不包含重复集合。不要求重复那就给集合排序。
+解题思路： 
+
+思路一： 4 sum 转为 3 sum 然后转为 2sum  ，有点麻烦。
+
+解法1 ：
+
+
+  public static List<List<Integer>> fourSum(int[] nums, int target) {
+        List<List<Integer>> result = new ArrayList<List<Integer>>();
+        Arrays.sort(nums);
+        //因为当后面最终的数目小于4 时不可能拼凑成一个集合，所以去掉后三位的遍历，优化性能
+        for (int i = 0; i <= nums.length - 4; i++) {
+            if (i > 0 && nums[i] == nums[i - 1]) {
+                continue;
+            }
+            threeSum(result, nums, target - nums[i], i + 1, nums[i]);
+        }
+        return result;
+    }
+
+
+    private static void threeSum(List<List<Integer>> result, int[] nums, int target, int startIndex, int firstNumber) {
+         //减二同样的道理，少于三个时不进行循环
+        for (int i = startIndex; i <= nums.length - 3; i++) {
+            if (i > startIndex && nums[i] == nums[i - 1]) {
+                continue;
+            }
+            twoSum(result, nums, target - nums[i], i + 1, firstNumber, nums[i]);
+        }
+    }
+
+
+    private static void twoSum(List<List<Integer>> result, int[] nums, int target, int startIndex, int firstNumber, int secondNumber) {
+        int left = startIndex;
+        int right = nums.length - 1;
+        int sum = 0;
+        while (left < right) {
+            sum = nums[left] + nums[right];
+            if (sum == target) {
+                List<Integer> sonList = new ArrayList();
+                sonList.add(firstNumber);
+                sonList.add(secondNumber);
+                sonList.add(nums[left]);
+                sonList.add(nums[right]);
+                result.add(sonList);
+                left++;
+                right--;
+                while (left < nums.length && nums[left] == nums[left - 1]) {
+                    left++;
+                }
+                while (right > 0 && nums[right] == nums[right + 1]) {
+                    right--;
+                }
+            }
+            if (sum > target) {
+                right--;
+            } else if (sum < target) {
+                left++;
+            }
+        }
+
+    }

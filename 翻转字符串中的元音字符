@@ -1,0 +1,55 @@
+原题地址：https://leetcode.com/problems/reverse-vowels-of-a-string/submissions/
+分类： 数组，双指针
+题目名称：反转字符串,只反转元音字符，如果非元音则跳过。
+
+题目描述： 给定一个字符串，然后将其反转。
+题目要求： 
+解题思路： 
+
+思路一： 双指针，左右互换。
+
+解法1 ：
+
+public String reverseVowels(String s) {
+        char [] sArray = s.toCharArray();
+        
+        int right = sArray.length - 1;
+        int left = 0;
+        while (left < right)
+        {   
+            while (left < sArray.length && !isVowels(sArray[left]))
+            {
+                left++;
+            }
+            
+            while (right >= 0 && !isVowels(sArray[right])){
+                right--;
+            }
+            if(left >= right)
+            {
+                break;
+            }
+            
+            char temp = sArray[left];
+            sArray[left] = sArray[right];
+            sArray[right] = temp;  
+        
+            left++;
+            right--;
+        }
+        return new String(sArray);
+    }
+    
+    
+    private boolean isVowels(char c)
+    {
+        if (c == 'a' || c == 'e'||c == 'i'||c == 'o'||c == 'u'){
+            return true;
+        }
+        
+        if (c == 'A' || c == 'E'||c == 'I'||c == 'O'||c == 'U'){
+            return true;
+        }
+        
+        return false;
+    }

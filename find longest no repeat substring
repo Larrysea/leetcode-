@@ -1,0 +1,43 @@
+原题地址：https://leetcode.com/problems/longest-substring-without-repeating-characters/
+分类： 数组，双指针
+题目名称： Longest Sbustring Without repeating characters 。
+
+题目描述： 找出最长不重复子字符串
+题目要求： 
+解题思路： 
+
+思路一： 双指针一直往前探索，如果遇到重复则，删除前面重复的部分，再往前扩展。如何判断字符是否出现过呢，应为ascii 总共有128 个字符，所以，建立一个每个字符出现的表，记录每个字符出现的次数。
+
+解法1 ：
+
+ public int lengthOfLongestSubstring(String s) {
+      
+       if (s.length() == 0) {
+            return 0;
+        }
+        char[] strArray = s.toCharArray();
+        int left = 0;
+        int right = -1;
+        //记录字符出现次数的数组
+        int[] charCount = new int[128];
+        int maxLength = Integer.MIN_VALUE;
+        while (left < strArray.length) {
+            //向左边探索的时候没有重复字符，则添加到结果中去
+            if (right + 1 < strArray.length && charCount[strArray[right + 1]] == 0) {
+                charCount[strArray[++right]]++;
+            }
+            // 遇到重复字符串了
+            else {
+                charCount[strArray[left++]]--;
+            }
+            if (right - left + 1 > maxLength) {
+                maxLength = right - left + 1;
+            }
+        }
+        return maxLength;
+      
+
+ }
+
+ 
+

@@ -1,0 +1,39 @@
+原题地址：https://leetcode.com/problems/happy-number/
+题目名称： Happy number 。
+题目描述： 将每个数拆成个位数，然后平方和相加，依次进行，如果最终结果等于1 则是happy number 否则不是happy number 
+题目要求： 
+解题思路： 
+
+思路一： 判断是不是happy number 一个最重要的就是平方和的数放在hashmap 中存起来，每次再做平方和的结果时候判断一下，hashmap中是否有该数，如果有则不可能是happy number。
+解法1 ：
+
+public static boolean isHappy(int n) {
+        Set<Integer> sumSet = new HashSet();
+        List<Integer> list = new LinkedList();
+        while (n != 0) {
+            getNumber(n, list);
+            n = 0;
+            for (int i = 0; i < list.size(); i++) {
+                n += Math.pow(list.get(i), 2);
+            }
+            list.clear();
+            if (!sumSet.contains(n)) {
+                sumSet.add(n);
+            } else {
+                return false;
+            }
+            if (n == 1) {
+                return true;
+            }
+        }
+        return true;
+
+    }
+
+
+    public static void getNumber(int number, List<Integer> list) {
+        while (number != 0) {
+            list.add(number % 10);
+            number = number / 10;
+        }
+    }

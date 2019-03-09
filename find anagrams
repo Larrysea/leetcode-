@@ -1,0 +1,52 @@
+原题地址：https://leetcode.com/problems/find-all-anagrams-in-a-string/
+分类： 数组，双指针
+题目名称： Find All Anagrams in string 。
+
+题目描述： 找出所有相同字母异序词。
+题目要求： 
+解题思路： 
+
+思路一： 双指针，每往右边扩展的时候判断窗口是否大于规定值，如果大于，则缩小窗口，然后再移动，再扩展窗口，如果窗口大小相等则开始比较。
+
+解法1 ：
+
+  public List<Integer> findAnagrams(String s, String p) {
+        
+ List<Integer> result = new ArrayList<>();
+
+        HashMap<Character, Integer> pMap = new HashMap();
+        HashMap<Character, Integer> sonMap = new HashMap();
+        char[] pArray = p.toCharArray();
+
+        //将p 中的字符数量放到map 中
+        for (char c : pArray) {
+            pMap.put(c, pMap.get(c) != null ? pMap.get(c) + 1 : 1);
+        }
+        char[] sArray = s.toCharArray();
+
+        int right = -1;
+        int left = 0;
+        Iterator<Map.Entry<Character, Integer>> iterator;
+
+        while (right + 1 < sArray.length) {
+            sonMap.put(sArray[++right], sonMap.get(sArray[right]) != null ? sonMap.get(sArray[right]) + 1 : 1);
+
+            if (right - left + 1 > pArray.length) {
+                sonMap.put(sArray[left], sonMap.get(sArray[left]) - 1);
+                left++;
+            }
+
+            iterator = sonMap.entrySet().iterator();
+
+            while (iterator.hasNext()) {
+                Map.Entry<Character, Integer> entry = iterator.next();
+                if (entry.getValue() == 0) {
+                    iterator.remove();
+                }
+            }
+            if (sonMap.size() == pMap.size() && sonMap.equals(pMap)) {
+                result.add(left);
+            }
+        }
+        return result;
+  }

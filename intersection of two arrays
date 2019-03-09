@@ -1,0 +1,30 @@
+原题地址：https://leetcode.com/problems/intersection-of-two-arrays/
+分类： set 使用
+题目名称： 找出两个数组的交集
+
+题目描述： 
+题目要求： 
+解题思路： 交集，那直接使用集合，然后使用retainAll 方法，使用该方法会删除调用者中的多余元素。
+
+思路一： 
+解法1 ：
+
+  public static int[] intersection(int[] nums1, int[] nums2) {
+            HashSet<Integer> setA = new HashSet<>();
+            HashSet<Integer> setB = new HashSet<>();
+    
+            for (int i = 0; i < nums1.length; i++) {
+                setA.add(nums1[i]);
+            }
+            for (int j = 0; j < nums2.length; j++) {
+                setB.add(nums2[j]);
+            }
+            setB.retainAll(setA);
+            int result[] = new int[setB.size()];
+            int i = 0;
+            Iterator<Integer> iterator = setB.iterator();
+            while (iterator.hasNext()) {
+                result[i++] = iterator.next();
+            }
+            return result;
+   }

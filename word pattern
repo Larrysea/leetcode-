@@ -1,0 +1,46 @@
+原题地址：https://leetcode.com/problems/word-pattern/
+题目名称： Word pattern 
+题目描述： 词汇模式匹配
+题目要求： 
+解题思路： 
+
+思路一： 将每个字符和对应的待匹配字符串建立匹配关系，然后进行将原字符通过匹配转换为字符二，然后检查两个字符是否匹配。
+解法1 ：
+
+   public static boolean wordPattern(String pattern, String str) {
+        if ((pattern == null || pattern.equals(" ")) && pattern.equals(str)) {
+            return false;
+        }
+
+        if (pattern.equals("") && pattern.equals(str)) {
+            return true;
+        }
+
+        char[] patternArray = pattern.toCharArray();
+        String[] strArray = str.split(" ");
+        HashMap<Character, String> patternMap = new HashMap();
+
+        if (patternArray.length != strArray.length) {
+            return false;
+        }
+
+        for (int i = 0; i < patternArray.length ; i++) {
+            if(!patternMap.containsKey(patternArray[i]) && !patternMap.containsValue(strArray[i]))
+            {
+                patternMap.put(patternArray[i], strArray[i]);
+            }
+        }
+        String temp = str.replace(" ", "");
+        return temp.equals(buildPatternStr(patternMap, patternArray));
+
+
+    }
+
+    private static String buildPatternStr(HashMap<Character, String> strMap, char[] charArray) {
+        StringBuilder sb = new StringBuilder();
+
+        for (int i = 0; i < charArray.length; i++) {
+            sb.append(strMap.get(charArray[i]));
+        }
+        return sb.toString();
+    }

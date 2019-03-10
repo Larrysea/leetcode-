@@ -1,0 +1,42 @@
+原题地址：https://leetcode.com/problems/4sum-ii/
+分类：     给出四个数组，从每个数组中任意选出一个数相加和为0的可能结果数量。
+题目名称：  Isomorphic 
+
+题目描述： 根据字符串出现频率进行排序。
+
+题目要求： 用o(n^2) 算法来计算结果
+
+解题思路：  
+
+
+思路一： 分治思路，四个数组，考虑分为两个数组之和为一个整体，所以就是看两个数组之和结果可能性，可以将c 和 d数组可能之和用map 保存起来，避免重复计算，只需要计算a b 数组就可以了。
+
+
+
+
+解法1 ：
+
+
+    public int fourSumCount(int[] A, int[] B, int[] C, int[] D) {
+        HashMap<Integer,Integer> resultMap = new HashMap();
+
+        int result = 0;
+        for (int i = 0;i < C.length;i++){
+            for (j = 0;j < D.length;j++)
+            {    
+                 //将 c 和 d 数组结果可能的和存储起来
+                 resultMap.put(C[i] + D[j],resultMap.getOrDefault(C[i] + D[j],0) + 1);
+            }
+        }
+
+        for (int i = 0,i < A.length;i++){
+            for (int j = 0;j < B.length;j++)
+            {
+                 if (resultMap.containsKey(-A[i] - B[j]))
+                 {
+                     result += resultMap.get(-A[i] - B[j]);
+                 }                  
+            }
+        }
+        return result;
+    }

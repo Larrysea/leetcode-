@@ -1,0 +1,41 @@
+原题地址：https://leetcode.com/problems/sort-characters-by-frequency/
+分类： 根据字符串中字符出现次数来进行排序
+题目名称： Isomorphic 
+
+题目描述： 根据字符串出现频率进行排序。
+
+题目要求： 
+
+解题思路：  
+
+
+思路一： 将每个字符出现的次数，存储在hashmap中，然后再进行排序。然后用优先队列，通过值来进行排序。
+
+
+
+解法1 ：
+
+
+    public String frequencySort(String s) {
+        HashMap<Character,Integer> map = new HashMap();
+        for (char c :s.toCharArray()){
+              map.put(s,map.getOrDefault(c,0) + 1);
+        } 
+
+        PriorityQueue<Map.Entry<Character,Integer>> queue = new PriorityQueue((a,b)-> b.getValue() - a.getValue());
+
+        queue.addAll(map.entrySet());
+        StringBuilder sb = new StringBuilder();
+        while(!queue.isEmpty())
+        {
+              Map.Entry entry = queue.poll();
+              for (int i = 0;i < (int)entry.getValue();i++)
+              {
+                  sb.append(entry.getKey());
+              }
+        }
+
+        return sb.toString();
+
+
+    }

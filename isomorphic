@@ -1,0 +1,38 @@
+原题地址：https://leetcode.com/problems/isomorphic-strings/
+分类： 数组，双指针
+题目名称： Isomorphic 
+
+题目描述： 判断是否是同形字符串
+题目要求： 
+
+解题思路：  
+
+
+思路一： 两个字符串，将key 字符串，target 字符串进行匹配，构架一个map,然后再遇到相同字符串时，查找map得到value 然后再于target 的值比对看是否相同。如果只包含的有值但是没有key的情况这种是映射重复了，所以不是同字异序词。
+
+解法1 ：
+
+
+     public boolean isIsomorphic(String s, String t) {
+       if (s.length() != t.length()) {
+            return false;
+        }
+        HashMap<Character, Character> map = new HashMap();
+
+        char[] sArray = s.toCharArray();
+        char[] tArray = t.toCharArray();
+
+        for (int i = 0; i < sArray.length; i++) {
+            if (!map.containsKey(sArray[i]) && !map.containsValue(tArray[i])) {
+                map.put(sArray[i], tArray[i]);
+            }
+            if (map.containsKey(sArray[i])) {
+                if (map.get(sArray[i]) != tArray[i]) {
+                    return false;
+                }
+            } else if (map.containsValue(tArray[i])) {
+                return false;
+            }
+        }
+        return true;
+    }

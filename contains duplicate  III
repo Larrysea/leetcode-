@@ -1,0 +1,49 @@
+原题地址：  https://leetcode.com/problems/contains-duplicate-iii/
+分类：      滑动窗口
+题目名称：  
+
+题目描述： 在两个 j - i <= k 的范围内是否存在 nums[i] - nums[j] < t 且 i - j < k 的情况。
+
+题目要求： 
+
+解题思路：  
+
+思路一： 
+
+首先是滑动窗口，如何判断值是否在正确的区间中呢？利用treeSet 取值最大和最小值，因为两数之差需要小于t 所以 nums[i] + nums[j] <= t
+
+所以以坐标轴来计算的话就是nums[i] 需要在 v-t -----  v -----  v+t  范围。在窗口超出的时候需要删除不在窗口中的值。
+因为可能存在溢出所以需要将nums 的计算进行long 转换，避免溢出。
+ 
+
+解法1 ：
+
+
+    public boolean containsNearbyAlmostDuplicate(int[] nums, int k, int t) {
+         TreeSet<Long> treeSet = new TreeSet();
+        for (int i = 0; i < nums.length; i++) {
+           //等价于 nums[i] - t <= nums[i] <= nums[i] + t
+           if (treeSet.ceiling((long) (nums[i]) - t) != null && treeSet.ceiling((long) (nums[i]) - t) <= (long)( nums[i]) + t) {
+                return true;
+            }
+            treeSet.add(Long.valueOf(nums[i]));
+            if (treeSet.size() == k + 1) {
+                treeSet.remove(Long.valueOf(nums[i - k]));
+            }
+        }
+
+        return false;
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+

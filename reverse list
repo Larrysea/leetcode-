@@ -1,0 +1,41 @@
+原题地址：  https://leetcode.com/problems/reverse-linked-list/
+分类：      链表
+题目名称：  
+
+题目描述： 翻转链表
+
+题目要求：  
+
+解题思路：  
+
+思路一： 
+
+设置三个指针，pre ,cur ,next ，然后不断的将三个值往前移动，直到尾部。
+
+//保后，移后，保前，移后
+ 
+
+解法1 ：
+
+
+    public ListNode reverseList(ListNode head) {
+         ListNode pre = null;
+         ListNode cur = head;
+         ListNode next = null;
+
+         while (cur != null){
+             next = cur.next;
+            cur.next = pre;
+            pre = cur;
+            cur = next;
+         }
+
+         return pre;
+    }
+
+
+
+
+
+
+

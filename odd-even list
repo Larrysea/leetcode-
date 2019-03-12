@@ -1,0 +1,39 @@
+原题地址：  https://leetcode.com/problems/odd-even-linked-list/
+分类：     链表
+题目名称：  奇偶链表
+
+题目描述：  将链表中奇数位置的节点都移动到链表的前部分。  
+
+题目要求：  
+
+解题思路： 这道题和partition list 有相似之处，一个是根据val 大小来划分链表，这个则是根据index 来进行划分，所以这道题的思路也是建立两个链表，然后将两个链表相连即可。
+思路一： 
+
+
+ 
+
+解法1 ：
+
+      public ListNode oddEvenList(ListNode head) {
+             ListNode currentNode = head;
+             int index = 1;
+             ListNode dummyNode1 = new ListNode(1);
+             ListNode dummyNode2= new ListNode(2);
+             ListNode oddCurNode = dummyNode1;
+             ListNode evenCurNode = dummyNode2;
+             while (currentNode != null){
+                    //奇数节点
+                    if(index % 2 != 0) {
+                       oddCurNode.next = currentNode;
+                       oddCurNode = oddCurrentNode.next;
+                    }else {
+                       evenCurNode.next = currentNode;
+                       evenCurNode = evenCurNode.next;
+                    }
+                    index++;
+                    currentNode = currentNode.next;
+             }
+             evenCurNode.next = null;
+             oddCurNode.next = dummyNode2.next;
+             return dummyNode1.next;
+      }

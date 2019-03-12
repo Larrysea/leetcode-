@@ -1,0 +1,38 @@
+原题地址：  https://leetcode.com/problems/remove-duplicates-from-sorted-list/
+分类：      链表
+题目名称：  
+
+题目描述： 删除链表中的重复节点
+
+题目要求：  
+
+解题思路：  设置两个指针头指正和尾指针，当头指针和尾指针相等时，不断移动头指针直到头尾不等， 然后将尾指针的下个节点指向当前头指针，然后移动尾指针，不断执行该操作直到尾部。
+
+思路一： 
+
+
+ 
+
+解法1 ：
+
+     public ListNode deleteDuplicates(ListNode head) {
+        ListNode headNode ,tailNode;
+        headNode = head;
+        tailNode = head;
+        while (headNode != null)
+        {
+            headNode = headNode.next;
+            while(headNode !=null && headNode.val == tailNode.val)
+            {
+                  headNode = headNode.next;
+            }
+            tailNode.next = headNode;
+            tailNode = headNode;
+        }
+     }
+
+
+
+
+
+

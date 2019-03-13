@@ -1,0 +1,37 @@
+原题地址： https://leetcode.com/problems/remove-duplicates-from-sorted-list-ii/
+分类：      链表
+题目名称：  删除链表中重复的元素
+
+题目描述：  
+
+题目要求：  
+
+解题思路：
+这个和删除链表中制定元素解法相似，只不过是要判断这个节点是否是重复节点，然后再决定删除。
+
+
+解法1 ：
+
+
+    public ListNode deleteDuplicates(ListNode head) {
+        ListNode dummyNode = new ListNode(-1);
+        dummyNode.next = head;
+        ListNode curNode = dummyNode;
+        ListNode preNode = null;
+        boolean hasDeleted = false;
+        while (curNode != null) {
+            while (curNode != dummyNode && curNode.next != null && curNode.val == curNode.next.val) {
+                curNode = curNode.next;
+                hasDeleted = true;
+            }
+            if (hasDeleted && preNode != null) {
+                preNode.next = curNode.next;
+                hasDeleted = false;
+            } else {
+                preNode = curNode;
+            }
+            curNode = curNode.next;
+        }
+
+        return dummyNode.next;
+    }

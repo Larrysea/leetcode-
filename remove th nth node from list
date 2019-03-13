@@ -1,0 +1,37 @@
+原题地址：  https://leetcode.com/problems/remove-nth-node-from-end-of-list/
+分类：      链表
+题目名称：  删除倒数第k 个节点
+
+
+
+  
+题目要求：  
+解题思路： 设置两个节点，一个是first 一个second ，两个之间相差k + 1 个位置，如果先的那个节点先到尾部了，那这个时候后面那个节点便可以进行删除了。 
+ 
+思路一： 
+
+
+
+
+解法1 ：
+     public ListNode removeNthFromEnd(ListNode head, int n) {
+        ListNode dummyNode = new ListNode(-1);
+        dummyNode.next = head;
+        ListNode firstNode = head;
+        ListNode slowNode = dummyNode;
+        int length = 0;
+        while (firstNode != null && length < n) {
+            firstNode = firstNode.next;
+            length++;
+        }
+        while (firstNode != null) {
+            firstNode = firstNode.next;
+            slowNode = slowNode.next;
+        }
+
+        ListNode deleteNode = slowNode.next;
+        slowNode.next = deleteNode.next;
+        deleteNode.next = null;
+
+        return dummyNode.next;
+     }

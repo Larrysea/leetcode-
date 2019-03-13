@@ -1,0 +1,28 @@
+原题地址：  https://leetcode.com/problems/remove-linked-list-elements/
+分类：      链表
+题目名称：  remove -linked list elements 
+
+题目描述：  
+
+题目要求：  移除链表中值为制定的节点
+
+解题思路：
+设置一个虚节点，不断循环，如果遇到节点则删除，设置虚拟头节点是为了避免一些特殊情况。
+
+解法1 ：
+
+    public ListNode removeElements(ListNode head, int val) {
+        ListNode dummyNode = new ListNode(-1);
+        dummyNode.next = head;
+        ListNode curNode = dummyNode;
+        while (curNode != null) {
+            if (curNode.next != null && curNode.next.val == val) {
+                ListNode delNode = curNode.next;
+                curNode.next = delNode.next;
+                delNode.next = null;
+            } else {
+                curNode = curNode.next;
+            }
+        }
+        return dummyNode.next;
+    }

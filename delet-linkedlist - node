@@ -1,0 +1,25 @@
+原题地址：  https://leetcode.com/problems/delete-node-in-a-linked-list/
+分类：      链表
+题目名称：  删除某个node ，但是没有提供链表的头节点，值提供了某个节点。
+
+
+
+题目描述： 如题所示
+题目要求： 
+解题思路： 将后一个节点的值直接复制到当前节点，然后删除下个节点即可。
+ 
+思路一： 
+
+
+
+
+解法1 ：
+     public void deleteNode(ListNode node) {
+        ListNode deleteNode = null;
+        if (node != null){
+            deleteNode = node.next;
+            node.val = deleteNode.val;
+            node.next = deleteNode.next;
+            deleteNode.next =null;
+        }
+     }

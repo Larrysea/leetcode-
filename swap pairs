@@ -1,0 +1,36 @@
+原题地址： https://leetcode.com/problems/swap-nodes-in-pairs/
+分类：    链表
+题目名称： 交换两个数值对
+
+题目描述： 将链表中的没两个节点进行交换
+题目要求： 
+解题思路： 
+
+思路一： 这个题目主要是考察设置指针，然后进行互相交换。
+pre node1 node2 next 
+
+交换以后变成 : node2  node1  next pre指向了node1 
+
+
+解法1 ：
+
+public ListNode swapPairs(ListNode head) {
+         ListNode dummyNode = new ListNode(-1);
+        dummyNode.next = head;
+        ListNode preNode = dummyNode;
+        while (preNode.next != null && preNode.next.next != null){
+            ListNode node1 = preNode.next;
+            ListNode node2 = node1.next;
+            ListNode next = node2.next;
+
+
+            preNode.next = node2;
+            node2.next = node1;
+            node1.next = next;
+
+            preNode = node1;
+        }
+
+        return dummyNode.next;
+
+    }

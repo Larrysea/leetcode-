@@ -1,0 +1,54 @@
+原题地址： https://leetcode.com/problems/insertion-sort-list/
+分类：     链表
+题目名称： 实现链表的插入排序
+
+
+题目描述： 如题所示
+题目要求： 
+解题思路： 
+
+思路一： 
+
+实现链表的插入排序。
+
+
+解法1 ：
+
+ public static ListNode insertionSortList(ListNode head) {
+        ListNode dummyNode = new ListNode(-1);
+        dummyNode.next = head;
+        ListNode curNode = dummyNode.next;
+        ListNode preNode = null;
+        ListNode insertNode = null;
+        while (curNode != null) {
+            //当前的val 小于前面的val
+            if (preNode != null && curNode.val < preNode.val) {
+                insertNode = curNode;
+                preNode.next = insertNode.next;
+                insertNode.next = null;
+                curNode = preNode.next;
+                insert(dummyNode, insertNode);
+            } else {
+                preNode = curNode;
+                curNode = curNode.next;
+            }
+
+        }
+
+        return dummyNode.next;
+    }
+
+
+    private static void insert(ListNode head, ListNode insertNode) {
+        ListNode preNode = head;
+        ListNode currentNode = preNode.next;
+        while (currentNode != null) {
+            if (currentNode.val >= insertNode.val) {
+                preNode.next = insertNode;
+                insertNode.next = currentNode;
+                return;
+            }
+            preNode = currentNode;
+            currentNode = currentNode.next;
+        }
+    }

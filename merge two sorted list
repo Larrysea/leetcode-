@@ -1,0 +1,38 @@
+原题地址： https://leetcode.com/problems/merge-two-sorted-lists/
+分类： 数组
+题目名称：合并两个排序链表
+
+题目描述： 给出两个排序链表将其合并
+题目要求： 
+解题思路： 
+
+思路一： 双指针一个链表1 一个链表2 ，比较值较小的值插入，进行完以后，两个链表可能存在剩余，所以需要将剩余链表插入到尾部。
+
+解法1 ：
+
+    public ListNode mergeTwoLists(ListNode l1, ListNode l2) {
+         ListNode dummyNode = new ListNode(-1);
+        ListNode curNode = dummyNode;
+        ListNode p1 = l1;
+        ListNode p2 = l2;
+        while (p1 != null && p2 != null) {
+
+            if (p1.val < p2.val) {
+                curNode.next = new ListNode(p1.val);
+                p1 = p1.next;
+            } else {
+                curNode.next = new ListNode(p2.val);
+                p2 = p2.next;
+            }
+            curNode = curNode.next;
+        }
+        if (p1 != null) {
+            curNode.next = p1;
+        }
+        if (p2 != null) {
+            curNode.next = p2;
+        }
+
+        return dummyNode.next;
+
+    }

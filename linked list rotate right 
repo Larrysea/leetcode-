@@ -1,0 +1,61 @@
+原题地址：  https://leetcode.com/problems/rotate-list/
+分类：      链表
+题目名称：   旋转链表
+
+
+
+  
+题目要求：  
+解题思路： 这个找到倒数的第k 个节点的前个节点，然后需要删除的一部分从尾部删除，让后将其拼接到头部即可。此题解法类似于删除倒数第k 个节点，主要是能够找到倒数第k 个节点。
+ 
+思路一： 
+
+^……^  这个代码需要优化有点shit.   见谅
+
+
+解法1 ：
+        public static ListNode rotateRight(ListNode head, int k) {
+        if (head == null) {
+            return head;
+        }
+        ListNode dummyNode = new ListNode(-1);
+        dummyNode.next = head;
+        ListNode slow = dummyNode;
+        ListNode fast = dummyNode.next;
+        int length = 0;
+        ListNode curNode = head;
+        while (curNode != null) {
+            curNode = curNode.next;
+            length++;
+        }
+        if (length < k) {
+            k = k % length;
+        }
+        length = 0;
+        while (fast != null && length < k) {
+            fast = fast.next;
+            length++;
+        }
+        while (fast != null) {
+            fast = fast.next;
+            slow = slow.next;
+            length++;
+        }
+        if (length == k || k == 0) {
+            return head;
+        }
+
+        ListNode insertNodeHead = slow.next;
+        //删除尾部的需要旋转节点
+        slow.next = null;
+        ListNode insertNodeTail = insertNodeHead;
+        while (insertNodeTail != null && insertNodeTail.next != null) {
+            insertNodeTail = insertNodeTail.next;
+            //找到尾部最后一个节点了
+            if (insertNodeTail != null && insertNodeTail.next == null) {
+                break;
+            }
+        }
+        insertNodeTail.next = head;
+        return insertNodeHead;
+    }

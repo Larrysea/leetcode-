@@ -1,0 +1,90 @@
+原题地址：   https://leetcode.com/problems/reorder-list/
+分类：      链表
+题目名称：   重新调整链表顺序
+
+
+
+  
+题目要求：  
+解题思路： 将链表对半拆成两份，然后将后一半的链表逆序，然后再使用merge list操作即可完成。
+
+demo： 1 - 2 - 3 - 4 
+  
+拆成两份以后：
+链表1 ： 1 - 2 
+链表2 ： 3 - 4 
+翻转链表2 4 - 3 
+
+合并：1-2 
+     4-3  
+     1-4-2-3
+
+ 
+思路一： 
+
+   public static void reorderList(ListNode head) {
+        if (head == null) {
+            return;
+        }
+        ListNode currentNode = head;
+        int length = 0;
+        while (currentNode != null) {
+            currentNode = currentNode.next;
+            length++;
+        }
+
+        currentNode = head;
+        int index = 0;
+        int endIndex = length % 2 == 0 ? length / 2 - 1 : length / 2;
+        while (currentNode != null && index < endIndex) {
+            currentNode = currentNode.next;
+            index++;
+        }
+        //找到下一半链表的头部的前一个节点
+        ListNode list2PreNode = currentNode;
+        ListNode list2Head;
+        if (length % 2 == 0) {
+            list2Head = list2PreNode.next;
+            list2PreNode.next = null;
+        } else {
+            list2Head = list2PreNode.next;
+            list2PreNode.next = null;
+        }
+
+        list2PreNode = reverseListNode(list2Head);
+
+        mergeTwoLinkedList(head, list2PreNode);
+
+    }
+
+
+    private static void mergeTwoLinkedList(ListNode head1, ListNode head2) {
+        ListNode next = null;
+        ListNode insertNode = null;
+        ListNode currentNode = head1;
+        while (head2 != null) {
+            //保存 链表1 的下个节点
+            next = currentNode.next;
+            insertNode = new ListNode(head2.val);
+            currentNode.next = insertNode;
+            insertNode.next = next;
+            currentNode = next;
+            head2 = head2.next;
+        }
+    }
+
+
+    private static ListNode reverseListNode(ListNode head) {
+        ListNode preNode = null;
+        ListNode currentNode = head;
+        ListNode next = null;
+
+        while (currentNode != null) {
+            next = currentNode.next;
+            currentNode.next = preNode;
+            preNode = currentNode;
+            currentNode = next;
+        }
+
+        return preNode;
+    }

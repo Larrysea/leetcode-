@@ -1,0 +1,51 @@
+原题地址： https://leetcode.com/problems/valid-parentheses/
+分类：    栈
+题目名称： 验证括号是否匹配 
+
+题目描述： 验证括号是否匹配。
+题目要求： 
+解题思路： 
+
+思路一： 使用栈来进行判断，栈顶和将要来的符号进行匹配，如果一开一闭，且类型对应则出栈，否则返回false.
+
+解法1 ：
+
+   public static boolean isValid(String s) {
+        Stack<Character> stack = new Stack();
+        char[] charArray = s.toCharArray();
+        for (int i = 0; i < charArray.length; i++) {
+            //如果栈中有数据且下个字符是个闭括号，则进行匹配检查
+            if (!stack.isEmpty() && isCloseParentheses(charArray[i])) {
+                //确认字符匹配，清楚栈中的顶部元素
+                if (isMatch(stack.peek(), charArray[i])) {
+                    stack.pop();
+                } else {
+                    //如果不匹配，直接返回false
+                    return false;
+                }
+            } else {
+                stack.push(charArray[i]);
+            }
+        }
+        return stack.isEmpty();
+    }
+
+    private static boolean isCloseParentheses(char temp) {
+        if (temp == ')' || temp == '}' || temp == ']') {
+            return true;
+        }
+        return false;
+    }
+
+    private static boolean isMatch(char a, char b) {
+        if (a == '(' && b == ')') {
+            return true;
+        }
+        if (a == '{' && b == '}') {
+            return true;
+        }
+        if (a == '[' && b == ']') {
+            return true;
+        }
+        return false;
+    }

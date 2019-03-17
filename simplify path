@@ -1,0 +1,41 @@
+原题地址： https://leetcode.com/problems/simplify-path/
+分类：    栈
+题目名称： linux 最简化路径
+
+题目描述：  给出一个linux 路径表达，计算出最简化的路径，. 代表当前路径 .. 代表返回上一级目录
+题目要求： 
+解题思路： 
+
+思路一： 首先将给出字符串根据 / 来分割，得到一个数组，然后遍历数组，遇到字符则添加到栈中，遇到. 则忽略，遇到.. 则清楚栈顶，最后将栈中剩下字符通过栈反一下顺序，然后每个字符拼接上/ 输出即可。
+
+解法1 ：
+
+     public static String simplifyPath(String path) {
+        String[] strArray = path.split("/");
+        Stack<String> charStack = new Stack();
+        for (int i = 0; i < strArray.length; i++) {
+            //如果是字符不为空，且不是符号则放进栈中
+            if (!strArray[i].isEmpty() && !strArray[i].equals(".") && !strArray[i].equals("..")) {
+                charStack.push(strArray[i]);
+            } else if (!strArray[i].isEmpty()) {
+                if (strArray[i].equals("..") && !charStack.isEmpty()) {
+                    charStack.pop();
+                }
+            }
+        }
+        Stack<String> resultStack = new Stack();
+        while (!charStack.isEmpty()) {
+            resultStack.push(charStack.pop());
+        }
+        StringBuilder sb = new StringBuilder();
+        if (resultStack.isEmpty()) {
+            sb.append("/");
+        } else {
+            while (!resultStack.isEmpty()) {
+                sb.append("/");
+                sb.append(resultStack.pop());
+            }
+        }
+
+        return sb.toString();
+    }

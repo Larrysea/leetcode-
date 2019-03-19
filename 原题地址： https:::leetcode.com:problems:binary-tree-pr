@@ -1,0 +1,167 @@
+原题地址： https://leetcode.com/problems/binary-tree-preorder-traversal/submissions/
+         https://leetcode.com/problems/binary-tree-inorder-traversal/
+         https://leetcode.com/problems/binary-tree-postorder-traversal/
+分类：    数
+题目名称： 树的遍历
+
+题目描述：  树的前，中，后遍历。递归版本
+题目要求： 
+解题思路： 
+
+思路一： 
+
+解法1 ：
+
+前序遍历：
+
+   public List<Integer> preorderTraversal(TreeNode root) {
+        List<Integer> result = new ArrayList();
+        preorder(root,result);
+        return result;
+    }
+    
+    public void preorder(TreeNode root,List list){
+           if(root != null){
+               list.add(root.val);
+               preorder(root.left,list);
+               preorder(root.right,list);
+           }
+    }
+
+
+
+
+中序遍历：
+
+    public List<Integer> inorderTraversal(TreeNode root) {
+         List<Integer> result = new ArrayList();
+         inorder(root,result);
+         return result;
+    }
+    
+     public void inorder(TreeNode root,List list){
+           if(root != null){
+               inorder(root.left,list);
+               list.add(root.val);
+               inorder(root.right,list);
+           }
+     }
+
+
+ 后序遍历：
+
+
+    public List<Integer> postorderTraversal(TreeNode root) {
+         List<Integer> result = new ArrayList();
+         postOrder(root,result);
+         return result;
+    }
+    
+    
+     public void postOrder(TreeNode root,List list){
+           if(root != null){
+               postOrder(root.left,list);
+               postOrder(root.right,list);
+               list.add(root.val);
+           }
+     }
+
+//非递归版本：
+
+ class Command {
+        boolean isPrintCommand;
+        TreeNode listNode;
+
+        public Command(boolean isPrintCommand, TreeNode listNode) {
+            this.isPrintCommand = isPrintCommand;
+            this.listNode = listNode;
+        }
+
+        public TreeNode getNode() {
+            return listNode;
+        }
+
+        public boolean isPrintCommand() {
+            return isPrintCommand;
+        }
+    }
+    //前序遍历
+    public List<Integer> preorderTraversal(TreeNode root) {
+        List<Integer> reuslt = new ArrayList();
+        Stack<Command> nodeStack = new Stack();
+        nodeStack.push(new Command(false, root));
+        while (!nodeStack.isEmpty()) {
+            Command currentCommand = nodeStack.pop();
+            //如果是打印node则直接把值放到result中
+            if (currentCommand.isPrintCommand()) {
+                reuslt.add(currentCommand.listNode.val);
+            }//如果是需要遍历的node
+            else if (currentCommand.listNode != null) {
+                if (currentCommand.listNode.right != null) {
+                    nodeStack.push(new Command(false, currentCommand.listNode.right));
+                }
+                if (currentCommand.listNode.left != null) {
+                    nodeStack.push(new Command(false, currentCommand.listNode.left));
+                }
+                nodeStack.push(new Command(true, currentCommand.listNode));
+            }
+        }
+
+        return reuslt;
+    }
+
+
+    public List<Integer> inorderTraversal(TreeNode root){
+        List<Integer> reuslt = new ArrayList();
+        Stack<Command> nodeStack = new Stack();
+        nodeStack.push(new Command(false, root));
+        while (!nodeStack.isEmpty()) {
+            Command currentCommand = nodeStack.pop();
+            //如果是打印node则直接把值放到result中
+            if (currentCommand.isPrintCommand()) {
+                reuslt.add(currentCommand.listNode.val);
+            }//如果是需要遍历的node
+            else if (currentCommand.listNode != null) {
+                if (currentCommand.listNode.right != null) {
+                    nodeStack.push(new Command(false, currentCommand.listNode.right));
+                }
+                nodeStack.push(new Command(true, currentCommand.listNode));
+                if (currentCommand.listNode.left != null) {
+                    nodeStack.push(new Command(false, currentCommand.listNode.left));
+                }
+            }
+        }
+
+        return reuslt;
+
+    }
+
+
+
+    public List<Integer> postorderTraversal(TreeNode root) {
+           List<Integer> reuslt = new ArrayList();
+        Stack<Command> nodeStack = new Stack();
+        nodeStack.push(new Command(false, root));
+        while (!nodeStack.isEmpty()) {
+            Command currentCommand = nodeStack.pop();
+            //如果是打印node则直接把值放到result中
+            if (currentCommand.isPrintCommand()) {
+                reuslt.add(currentCommand.listNode.val);
+            }//如果是需要遍历的node
+            else if (currentCommand.listNode != null) {
+                nodeStack.push(new Command(true, currentCommand.listNode));
+                if (currentCommand.listNode.right != null) {
+                    nodeStack.push(new Command(false, currentCommand.listNode.right));
+                }
+                if (currentCommand.listNode.left != null) {
+                    nodeStack.push(new Command(false, currentCommand.listNode.left));
+                }
+            }
+        }
+        return reuslt;
+    }
+
+
+
+
+    

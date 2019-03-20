@@ -1,0 +1,49 @@
+原题地址： https://leetcode.com/problems/binary-tree-level-order-traversal/
+        
+分类：     数
+题目名称： 树的层序遍历
+
+题目描述：  树按层遍历
+题目要求： 
+解题思路： 
+
+思路一： 从上到下遍历，每次遍历字节的时候level 加1 ，最终将level 和节点对应起来即可，然后保存在map中。
+
+解法1 ：
+
+    class TreeNodeWithLevel{
+          public  TreeNode node;
+          public  int level;
+          public TreeNodeWithLevel(TreeNode node,int level){
+                 this.node = node;
+                 this.level = level;
+          }
+    }
+
+
+    public List<List<Integer>> levelOrder(TreeNode root) {
+           List<List<Integer>> result = new ArrayList();
+           TreeMap<Integer,List<Integer>> resultMap = new TreeMap();
+           Queue<TreeNodeWithLevel> queue = new LinkedLsit();
+           queue.offer(root);    
+           while(!queue.isEmpty()){
+                 TreeNodeWithLevel node = queue.pop();
+                 int level = node.level;
+                 if(resultMap.get(level) == null){
+                     reusltMap.put(level,new ArrayList<Integer>());
+                 }
+                 resultMap.get(level).add(node.val);
+
+                 if(node.left != null){
+                   queue.offer(new TreeNodeWithLevel(node.left,level + 1));
+                 }
+                 if(node.right != null){
+                   queue.offer(new TreeNodeWithLevel(node.right,level + 1)); 
+                 }
+           } 
+           KeySet<Integer> set = resultMap.keySet();
+           for(int level:set){
+               result.add(resultMap.get(level));
+           }
+           return result;
+    }

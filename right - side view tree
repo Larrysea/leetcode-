@@ -1,0 +1,57 @@
+原题地址： https://leetcode.com/problems/binary-tree-right-side-view/
+        
+分类：       数
+题目名称：   树按层遍历，然后站在树的右侧去看获得的节点按层输出。
+
+题目描述：  
+题目要求： 
+解题思路： 
+
+思路一： 本质上这道题目还是按层遍历，只不过现在是需要判断level 如果不等于下个层级则代表处于拐点，则是最右边，该问题的follow up 问题是如果从左边看，输出结果。
+
+解法1 ：
+
+    static class TreeNodeWithLevel {
+        public TreeNode node;
+        public int level;
+
+        public TreeNodeWithLevel(TreeNode node, int level) {
+            this.node = node;
+            this.level = level;
+        }
+    }
+
+
+    public List<Integer> rightSideView(TreeNode root) {
+           if(root == null){
+              return new List();
+           }
+
+           List<Integer> result = new LinkedList();
+           result.add(root.val);
+           Queue<TreeNodeWithLevel> queue = new LinkedList();
+           queue.offer(new TreeNodeWithLevel(root,0));
+           while(!queue.isEmpty()){
+                 TreeNodeWithLevel nodeWithLevel = queue.poll();
+                
+                 TreeNode treeNode = nodeWithLevel.node;
+                 int level = nodeWithLevel + 1;
+                 result.add(treeNode.val);
+                 if(treeNode.left != null){
+                    queue.offer(new TreeNodeWithLevel(treeNode.left,level + 1));
+                 }
+                 if(treeNode.right != null){
+                    queue.offer(new TreeNodeWithLevel(treeNode.right,level + 1));
+                 }
+                 if(nodeWithLevel.level != queue.peek().level || queue.peek() == null){
+                    result.add(treeNode.val);
+                 }
+           }
+
+           return result;
+    }
+
+
+
+    follow up 问题解法：
+    修改访问顺序先访问有节点，那最后一个节点就是左节点，那这个就可能是最左边的节点。

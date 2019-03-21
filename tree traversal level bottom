@@ -1,0 +1,61 @@
+原题地址： https://leetcode.com/problems/binary-tree-level-order-traversal-ii/
+        
+分类：     数
+题目名称：  树的层倒序遍历
+
+题目描述：  树按层遍历，从底部往顶部访问，并且按层输出所有节点。
+题目要求： 
+解题思路： 
+
+思路一： 从上到下遍历，每次遍历字节的时候level 加1 ，最终将level 和节点对应起来即可，然后保存在map中。
+
+解法1 ：
+
+    static class TreeNodeWithLevel {
+        public TreeNode node;
+        public int level;
+
+        public TreeNodeWithLevel(TreeNode node, int level) {
+            this.node = node;
+            this.level = level;
+        }
+    }
+
+
+    public static List<List<Integer>> levelBottom(TreeNode root) {
+        if (root == null) {
+            return new ArrayList<>();
+        }
+        List<List<Integer>> result = new ArrayList();
+        //自定义compartor 实现level 倒序排序，然后输出
+        Comparator comparator = new Comparator<Integer>() {
+            @Override
+            public int compare(Integer o1, Integer o2) {
+                return o2 - o1;
+            }
+        };
+        TreeMap<Integer, List<Integer>> resultMap = new TreeMap(comparator);
+        TreeMap map = new TreeMap();
+        Queue<TreeNodeWithLevel> queue = new LinkedList<>();
+        queue.offer(new TreeNodeWithLevel(root, 0));
+        while (!queue.isEmpty()) {
+            TreeNodeWithLevel node = queue.poll();
+            int level = node.level;
+            if (resultMap.get(level) == null) {
+                resultMap.put(level, new ArrayList<Integer>());
+            }
+            resultMap.get(level).add(node.node.val);
+
+            if (node.node.left != null) {
+                queue.offer(new TreeNodeWithLevel(node.node.left, level + 1));
+            }
+            if (node.node.right != null) {
+                queue.offer(new TreeNodeWithLevel(node.node.right, level + 1));
+            }
+        }
+        Set<Integer> set = resultMap.keySet();
+        for (int level : set) {
+            result.add(resultMap.get(level));
+        }
+        return result;
+    }

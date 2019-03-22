@@ -1,0 +1,31 @@
+原题地址： https://leetcode.com/problems/merge-sorted-array/
+分类：     数组
+题目名称：  合并两个排序数组
+
+题目描述：  将两个排序数组合并到一个数组中
+题目要求： 
+解题思路：  
+
+思路一： 暴力解法一个数字一个数字的插入
+
+解法1 ：
+
+
+
+    public static void merge(int[] nums1, int m, int[] nums2, int n) {
+        int j = 0;
+        int i = 0;
+        int nums1Length = m;
+        while (j < n) {
+            while (i < nums1Length && nums2[j] >= nums1[i]) {
+                i++;
+            }
+            for (int k = nums1Length; k > i && k - 1 >= 0; k--) {
+                nums1[k] = nums1[k - 1];
+            }
+            nums1[i] = nums2[j];
+            i++;
+            nums1Length++;
+            j++;
+        }
+    }

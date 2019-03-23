@@ -1,0 +1,19 @@
+原题地址：  https://leetcode.com/problems/maximum-depth-of-binary-tree/submissions/
+分类：     树
+题目名称：  计算二叉树最大深度
+
+题目描述：  
+题目要求： 
+解题思路：  
+
+思路一： 递归的去思考，计算出左右两边最大子树深度加1 则是该树的最大深度。
+
+解法1 ：
+
+    
+    public int maxDepth(TreeNode root) {
+           if(root == null){
+               return 0;
+           }
+        return Math.max(maxDepth(root.left),maxDepth(root.right)) + 1;
+    }

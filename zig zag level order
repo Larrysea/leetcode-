@@ -1,0 +1,61 @@
+原题地址：  https://leetcode.com/problems/binary-tree-zigzag-level-order-traversal/
+分类：     树
+题目名称：  之字形打印树
+
+题目描述：  树按层打印并且要走之字形
+题目要求： 
+解题思路：  
+
+思路一： 该题算是按层遍历的扩张，但是按层遍历以后注意每一层添加节点的时候需要从头部添加或者尾部添加来实现之字打印偶数行需要逆序，所以添加的时候不断添加到头部。
+
+解法1 ：
+
+    
+    static class TreeNodeWithLevel {
+        public TreeNode node;
+        public int level;
+
+        public TreeNodeWithLevel(TreeNode node, int level) {
+            this.node = node;
+            this.level = level;
+        }
+    }
+
+      
+
+     
+     public List<List<Integer>> zigzagLevelOrder(TreeNode root) {
+            Queue<TreeNodeWithLevel> queue = new LinkedList();
+            queue.offer(new TreeNodeWithLevel(root,0));
+            Map<Integer,List<Integer>> map = new TreeMap();
+            boolean reverse = false;
+            TreeNode currentNode = null;
+            int level = 0;
+            while(!queue.isEmpty()){
+                  TreeNodeWithLevel nodeWithLevel = queue.poll();
+                  level = nodeWithLevel.level;
+                  currentNode = nodeWithLevel.node;
+                  if(map.get(level) == null){
+                     map.put(level,new LinkedList());
+                  }
+                  if(reverse){
+                     map.get(level).add(0,currentNode.val);                  
+                  }else{
+                     map.get(level).add(currentNode.val);
+                  }
+                  reverse = !reverse;
+                  if(currentNode.left != null){
+                     queue.offer(new TreeNodeWithLevel(currentNode.left,level + 1));
+                  }
+                  if(currentNode.right != null){
+                     queue.offer(new TreeNodeWithLevel(currentNode.right,level + 1));
+                  }                  
+            }
+            List<List<Integer>> result = new List();
+            Set<Integer> set = map.keySet();
+            for(int i:set){
+                result.add(i,map.get(i));
+            }
+            return result;
+     }
+

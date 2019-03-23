@@ -7,6 +7,7 @@
 解题思路：  
 
 思路一： 暴力解法一个数字一个数字的插入
+思路二： 将第一个数组看成结果数组，尾部看成一个新的头，将两个数组中较大的插入数组的尾部，然后不断的插入就好，时间复杂度会好于思路1，代码解法也更清晰。
 
 解法1 ：
 
@@ -28,4 +29,24 @@
             nums1Length++;
             j++;
         }
+    }
+
+    public static void merge(int[] nums1, int m, int[] nums2, int n){
+           //数组1 的最后一个下标位置
+           int startIndex = m + n - 1;
+           int num1Index = m - 1;
+           int num2Index = n - 1;
+           while(num1Index >=0 && num2Index >= 0){
+                if(nums1[num1Index] > 0 && nums2[nums2Index]){
+                     nums1[startIndex--] = nums1[num1Index--] ;   
+                }else{
+                     nums1[startIndex--] = nums2[num2Index--] ;   
+                }
+           }
+           while(num1Index >= 0){
+                nums1[startIndex--] = nums1[num1Index--];
+           }
+           while(num2Index >= 0){
+                nums1[startIndex--] = nums2[num2Index--];
+           }
     }

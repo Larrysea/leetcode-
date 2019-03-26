@@ -1,0 +1,33 @@
+原题地址：  https://leetcode.com/problems/same-tree/
+分类：     判断两颗树是否是同一颗树
+题目名称：  
+
+题目描述：  
+题目要求：   
+解题思路： 
+
+思路一：   
+
+解法1 ：  
+
+   private boolean isSame = true;
+
+    public boolean isSameTree(TreeNode p, TreeNode q) {
+           travserTree(p,q);
+           return isSame;
+    }
+
+
+    private void travserTree(TreeNode p,TreeNode q){
+           if(p == null && q == null) {
+               return;
+           } else if(p != null && q != null){
+               if(p.val != q.val){
+                  isSame = false;
+               }
+               travserTree(p.left,q.left);
+               travserTree(p.right,q.right);
+           }else{
+               isSame = false;
+           } 
+    }

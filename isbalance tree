@@ -1,0 +1,44 @@
+原题地址：  https://leetcode.com/problems/balanced-binary-tree/submissions/
+        
+分类：     判断树是否是平衡二叉树
+
+题目描述：  
+题目要求：   
+解题思路： 
+
+思路一：  递归的想，如果是平衡二叉树，那左右子树必须是平衡二叉树，如果左右子树是平衡二叉树，则判断两颗树的高度差是否大于1 如果大于则不是平衡二叉树
+
+解法1 ：  
+
+
+
+    private boolean isBalance = true;
+    
+    public boolean isBalanced(TreeNode root) {
+           isBalance(root,0);
+           return isBalance;
+    }
+    
+    private void isBalance(TreeNode root,int level){
+            if(root == null){
+                return;
+            }
+            isBalance(root.left,level + 1);
+            isBalance(root.right,level + 1 ); 
+            if(!isBalance){
+                return;
+            }
+            if(Math.abs(getLevel(root.left,level + 1) - getLevel(root.right,level + 1)) > 1){
+                isBalance =false;
+            }
+    }
+    
+    private int getLevel(TreeNode root,int currentLevel){
+            if(root == null){
+                return 0;
+            }else
+            {
+                return Math.max( getLevel(root.left,currentLevel),getLevel(root.right,currentLevel)) + 1;
+            }
+            
+    }

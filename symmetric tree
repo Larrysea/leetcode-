@@ -1,0 +1,42 @@
+原题地址：  https://leetcode.com/problems/symmetric-tree/submissions/
+        
+分类：     判断一颗树是不是镜像树，从中间劈开判断节点是否相等
+题目名称：  
+
+题目描述：  
+题目要求：   
+解题思路： 
+
+思路一：  递归的求解，左边的和右边去判断是否相等
+
+解法1 ：  
+
+
+
+
+        private boolean isSymmetric = true;
+  
+        public boolean isSymmetric(TreeNode root) {
+               if(root == null){
+                   return true;
+               }
+               isSymmetricInner(root.left,root.right);
+               return isSymmetric;
+        }
+
+
+        private void isSymmetricInner(TreeNode left,TreeNode right){
+                if(left == null && right == null){
+                   return;
+                }
+                if(left != null && right != null){
+                     if(left.val != right.val){
+                         isSymmetric = false;
+                     }
+                     isSymmetricInner(left.left,right.right);
+                     isSymmetricInner(left.right,right.left);                 
+                }
+                else{
+                     isSymmetric = false;
+                }
+        }

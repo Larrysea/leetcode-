@@ -1,0 +1,26 @@
+原题地址：  https://leetcode.com/problems/path-sum/
+        
+分类：     判断一颗树是否包含从根节点到叶子节点和为sum的一个路径
+
+题目描述：  
+题目要求：   
+解题思路： 
+
+思路一：  递归思想，如果存在路径，则是sum 减去当前节点值，并且存在这么一个子路径
+
+解法1 ：  
+
+
+
+       public boolean hasPathSum(TreeNode root, int sum) {
+           if(root == null){
+               return false;
+           }
+          
+           if(root.left == null && root.right == null){
+               if(root.val == sum ){
+                   return true;
+               }
+           }
+           return hasPathSum(root.left,sum - root.val) || hasPathSum(root.right,sum - root.val);
+    }

@@ -1,0 +1,35 @@
+原题地址：  https://leetcode.com/problems/binary-tree-paths/
+        
+分类：     
+
+题目描述：  
+题目要求：   
+解题思路： 
+
+思路一：  递归思想，如果存在路径，则是sum 减去当前节点值，并且存在这么一个子路径
+
+解法1 ：  
+
+
+
+      public List<String> binaryTreePaths(TreeNode node) {
+            List<String> result = new ArrayList();
+             if(node == null){
+                 return new ArrayList();
+             }
+              //叶子节点添加进去
+             if(node.left == null && node.right == null){
+                  result.add(String.valueOf(node.val));
+                  return result;
+             }
+             List<String> leftPath =  binaryTreePaths(node.left);
+             for(int i = 0;i < leftPath.size();i++){
+                result.add(String.valueOf(node.val) +"->"+leftPath.get(i));
+             }
+             List<String> rightPath = binaryTreePaths(node.right);
+             for(int i = 0;i < rightPath.size();i++){
+                result.add(String.valueOf(node.val) +"->" +rightPath.get(i));
+             }  
+              
+             return result;
+    }

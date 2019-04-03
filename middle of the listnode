@@ -1,0 +1,20 @@
+原题地址： https://leetcode.com/problems/middle-of-the-linked-list/submissions/
+题目名称： 链表只找中间节点
+
+题目描述： 
+题目要求：  o(n) 时间复杂度，o(1) 空间复杂度
+解题思路：  快慢指针，一个指针的速度是2 一个指针的速度是1 ，那块的指针到达终点，那慢的指针肯定是只走了一半路程。
+
+
+   public ListNode middleNode(ListNode head) {
+           ListNode firstNode = head;
+           ListNode slowNode = head;
+           while(firstNode != null && firstNode.next != null){
+                 slowNode = slowNode.next;
+                 firstNode = firstNode.next.next;
+                 
+           }
+          
+          return slowNode;
+          
+    }
